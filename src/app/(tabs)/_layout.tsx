@@ -27,7 +27,7 @@ export default function TabLayout() {
             key={key}
             name={name}
             options={{
-              title: title,
+              title,
               tabBarActiveTintColor: '#2F50C1',
               tabBarInactiveTintColor: '#A7A3B3',
               tabBarIcon: ({ focused }) =>

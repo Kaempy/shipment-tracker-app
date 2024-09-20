@@ -1,10 +1,17 @@
+/* eslint-disable no-unused-vars */
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import React, { createContext, ReactNode, useEffect, useState } from 'react';
+import React, {
+  createContext,
+  ReactNode,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 
 type User = {
-  full_name: 'Tasty Test';
-  home_page: '/app';
-  message: 'Logged In';
+  full_name: string;
+  home_page: string;
+  message: string;
 };
 
 type AuthContextType = {
@@ -38,12 +45,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setUser(null);
     await AsyncStorage.removeItem('user');
   };
-
-  return (
-    <AuthContext.Provider value={{ user, login, logout }}>
-      {children}
-    </AuthContext.Provider>
-  );
+  const value = useMemo(() => ({ user, login, logout }), [user, login, logout]);
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
 export const useAuth = () => {

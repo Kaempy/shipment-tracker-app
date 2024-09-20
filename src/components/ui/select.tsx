@@ -27,7 +27,7 @@ const SelectTrigger = React.forwardRef<
     <SelectPrimitive.Trigger
       ref={ref}
       className={cn(
-        'native:h-12 font-400 flex h-10 flex-row items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm text-muted-foreground web:ring-offset-background web:focus:outline-none web:focus:ring-2 web:focus:ring-ring web:focus:ring-offset-2 [&>span]:line-clamp-1',
+        'native:h-12 flex h-10 flex-row items-center justify-between rounded-md border border-input bg-background px-3 py-2 font-400 text-sm text-muted-foreground web:ring-offset-background web:focus:outline-none web:focus:ring-2 web:focus:ring-ring web:focus:ring-offset-2 [&>span]:line-clamp-1',
         props.disabled && 'opacity-50 web:cursor-not-allowed',
         className
       )}
@@ -107,7 +107,7 @@ const SelectContent = React.forwardRef<
           <SelectPrimitive.Content
             ref={ref}
             className={cn(
-              'font-400 relative z-50 max-h-96 min-w-[8rem] rounded-md border border-border bg-popover px-1 py-2 shadow-md shadow-black/10 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2',
+              'relative z-50 max-h-96 min-w-[8rem] rounded-md border border-border bg-popover px-1 py-2 font-400 shadow-md shadow-black/10 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2',
               position === 'popper' &&
                 'data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1',
               open
@@ -144,7 +144,7 @@ const SelectLabel = React.forwardRef<
   <SelectPrimitive.Label
     ref={ref}
     className={cn(
-      'native:pb-2 native:pl-10 native:text-base font-400 py-1.5 pl-8 pr-2 text-sm font-semibold text-popover-foreground',
+      'native:pb-2 native:pl-10 native:text-base py-1.5 pl-8 pr-2 font-400 text-sm font-semibold text-popover-foreground',
       className
     )}
     {...props}

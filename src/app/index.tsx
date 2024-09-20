@@ -37,14 +37,14 @@ const HomeScreen = () => {
 
 export default HomeScreen;
 const styles = StyleSheet.create({
-  rootContainer: {
-    height: '100%',
-    backgroundColor: '#2F50C1',
-  },
   container: {
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    flex: 1,
     display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    flex: 1,
+  },
+  rootContainer: {
+    backgroundColor: '#2F50C1',
+    height: '100%',
   },
 });

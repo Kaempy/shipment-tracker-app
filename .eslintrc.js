@@ -1,11 +1,3 @@
-// https://docs.expo.dev/guides/using-eslint/
-// module.exports = {
-//   extends: ['expo', 'prettier'],
-//   plugins: ['prettier'],
-//   rules: {
-//     'prettier/prettier': 'error',
-//   },
-// };
 module.exports = {
   env: {
     browser: true,
@@ -59,6 +51,10 @@ module.exports = {
     'react/style-prop-object': 'off',
     '@typescript-eslint/no-var-requires': 'off',
     'react-native/no-raw-text': 'off',
+    'react-native/no-color-literals': 'off',
+    camelcase: 'off',
+    'no-shadow': 'off',
+    'react-native/sort-styles': 'off',
   },
   settings: {
     'import/resolver': {

@@ -2,6 +2,7 @@ import LottieView from 'lottie-react-native';
 import React, { Dispatch, SetStateAction } from 'react';
 import { StyleSheet } from 'react-native';
 import Animated, { FadeIn } from 'react-native-reanimated';
+
 type Props = {
   setAppReady: Dispatch<SetStateAction<boolean>>;
   fontsLoaded: boolean;
@@ -31,9 +32,9 @@ export default AnimatedSplashScreen;
 const styles = StyleSheet.create({
   rootContainer: {
     display: 'flex',
-    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    flex: 1,
     width: '100%',
     height: '100%',
     backgroundColor: 'black',

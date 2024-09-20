@@ -1,4 +1,4 @@
-#### 
+####
 
 ## **React Native Developer Test Task: Shipment Tracker App**
 
@@ -10,20 +10,20 @@ Create a simple shipment tracking app using React Native, which allows drivers t
 
 #### **Features:**
 
-- **Splash Screen:** 
+- **Splash Screen:**
   - Implement a splash screen with animation based on the provided Figma file
-- **Login Screen:** 
+- **Login Screen:**
   - Implement a login screen with validation.
   - Include animation that exists in Figma
   - Include fields for username/email and password.
-- **Shipment List Screen:** 
+- **Shipment List Screen:**
   - Display a list of shipments with their status (Received, Canceled, etc.).
   - Use a flat list or section list to display the shipments.
   - Implement pull-to-refresh functionality.
 
 #### **Deliverables:**
 
-- **Source Code:** 
+- **Source Code:**
   - Provide the complete source code with a clear folder structure written in Typescript on GitHub, and make it public.
   - Include a README file with instructions on how to run the app.
 - **APK**

@@ -10,13 +10,7 @@ import {
 import Emptylist from '@src/shared/EmptyList';
 import { ShipmentDetails } from '@src/types/base';
 import { StatusBar } from 'expo-status-bar';
-import React, {
-  Fragment,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
   ActivityIndicator,
   Alert,
@@ -89,47 +83,45 @@ const HomeScreen = () => {
   }
 
   return (
-    <Fragment>
-      <GestureHandlerRootView style={{ flex: 1 }}>
-        <StatusBar style="dark" />
-        <SafeAreaView
-          style={[
-            styles.rootContainer,
-            { backgroundColor: visible ? '#2F50C1' : '#ffffff' },
-          ]}
-        >
-          {visible ? (
-            <SigninModal visible={visible} setVisible={setVisible} />
-          ) : (
-            <View className="h-full flex-1 px-4">
-              <ListHeader showFilterModal={handleSnapPress} />
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <StatusBar style="dark" />
+      <SafeAreaView
+        style={[
+          styles.rootContainer,
+          { backgroundColor: visible ? '#2F50C1' : '#ffffff' },
+        ]}
+      >
+        {visible ? (
+          <SigninModal visible={visible} setVisible={setVisible} />
+        ) : (
+          <View className="h-full flex-1 px-4">
+            <ListHeader showFilterModal={handleSnapPress} />
 
-              {/* FlatList for displaying shipment items */}
-              <FlatList
-                data={data}
-                keyExtractor={({ name }) => name}
-                renderItem={({ item }) => (
-                  <View className="gap-3">
-                    <ShipmentItem item={item} />
-                  </View>
-                )}
-                ListEmptyComponent={
-                  <Emptylist
-                    title="No items found!"
-                    subTitle="No shipments item available."
-                  />
-                }
-                refreshing={refreshing}
-                onRefresh={onRefresh}
-              />
-            </View>
-          )}
-        </SafeAreaView>
-        <BottomSheetModalProvider>
-          <FilterSheet ref={sheetRef} />
-        </BottomSheetModalProvider>
-      </GestureHandlerRootView>
-    </Fragment>
+            {/* FlatList for displaying shipment items */}
+            <FlatList
+              data={data}
+              keyExtractor={({ name }) => name}
+              renderItem={({ item }) => (
+                <View className="gap-3">
+                  <ShipmentItem item={item} />
+                </View>
+              )}
+              ListEmptyComponent={
+                <Emptylist
+                  title="No items found!"
+                  subTitle="No shipments item available."
+                />
+              }
+              refreshing={refreshing}
+              onRefresh={onRefresh}
+            />
+          </View>
+        )}
+      </SafeAreaView>
+      <BottomSheetModalProvider>
+        <FilterSheet ref={sheetRef} />
+      </BottomSheetModalProvider>
+    </GestureHandlerRootView>
   );
 };
 

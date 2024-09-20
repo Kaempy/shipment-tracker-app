@@ -1,3 +1,6 @@
+/* eslint-disable  @typescript-eslint/no-unused-vars */
+/* eslint-disable  no-unused-vars */
+
 import { Button } from '@components/ui/button';
 import { Text } from '@components/ui/text';
 import {
@@ -15,6 +18,7 @@ import React, {
   useState,
 } from 'react';
 import { Alert, View } from 'react-native';
+
 type Message = {
   name: string;
   status: string;
