@@ -1,6 +1,6 @@
 # 📦 Shipment Tracker App
 
-This is a simple shipment tracking app developed in React Native using TypeScript. The app allows drivers to manage and track the status of their shipments. It includes a login system with validation, a splash screen animation, and a list of shipments that supports pull-to-refresh functionality.
+The **Shipment Tracker App** is an Expo project developed using **React Native** and **TypeScript**. This app allows drivers to manage and track the status of their shipments. It includes a **login system** with form validation, a **splash screen animation**, and a **shipment list** with pull-to-refresh functionality.
 
 ## 🛠 Features
 
@@ -21,6 +21,8 @@ This is a simple shipment tracking app developed in React Native using TypeScrip
 - **React Hook Form** for form validation on the login screen.
 - **Async Storage** for storing login information persistently.
 - **Lottie** for smooth and eye-catching splash screen animations.
+- **API Integration** to fetch and display real-time shipment data from a server.
+- **Husky** for enforcing consistent coding guidelines through Git hooks.
 
 ## **How to Run the App**
 
@@ -89,6 +91,9 @@ To build the APK for Android:
 
 ## **Folder Structure**
 
+<details>
+  <summary>📂 Folder Structure</summary>
+
 ```bash
 ├── assets/         # All images and Lottie animation files
 ├── src/            # Source code for all files and components
@@ -101,5 +106,4 @@ To build the APK for Android:
 ├── utils/          # Utility functions and helpers
 ├── README.md       # App documentation
 └── package.json    # Dependencies and project metadata
-
 ```
