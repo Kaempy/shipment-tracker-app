@@ -3,6 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {
   createContext,
   ReactNode,
+  useCallback,
   useEffect,
   useMemo,
   useState,
@@ -36,16 +37,18 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     loadUserData();
   }, []);
 
-  const login = async (userData: User) => {
+  const login = useCallback(async (userData: User) => {
     setUser(userData);
     await AsyncStorage.setItem('user', JSON.stringify(userData));
-  };
+  }, []);
 
-  const logout = async () => {
+  const logout = useCallback(async () => {
     setUser(null);
     await AsyncStorage.removeItem('user');
-  };
+  }, []);
+
   const value = useMemo(() => ({ user, login, logout }), [user, login, logout]);
+
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
