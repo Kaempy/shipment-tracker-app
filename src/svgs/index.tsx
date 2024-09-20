@@ -1,0 +1,9 @@
+export { default as ArrowRight } from './arrow-right';
+export { default as Bell } from './bell';
+export { default as Containers } from './containers';
+export { default as Expand } from './expand';
+export { default as Phone } from './phone';
+export { default as Scan } from './scan';
+export { default as User } from './user';
+export { default as Wallet } from './wallet';
+export { default as Whatsapp } from './whatsapp';

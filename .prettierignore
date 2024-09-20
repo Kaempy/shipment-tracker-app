@@ -1,0 +1,12 @@
+.expo
+expo-env.d.ts
+nativewind-env.d.ts
+node_modules
+yarn.lock
+package-lock.json
+public
+build
+android
+ios
+metro.config.js
+babel.config.js
