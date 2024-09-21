@@ -9,7 +9,7 @@ import {
   BottomSheetModal,
   BottomSheetView,
 } from '@gorhom/bottom-sheet';
-import { Loader2 } from '@lib/icons/Loader2';
+import { Message } from '@src/types/base';
 import React, {
   forwardRef,
   useCallback,
@@ -17,13 +17,7 @@ import React, {
   useMemo,
   useState,
 } from 'react';
-import { Alert, View } from 'react-native';
-
-type Message = {
-  name: string;
-  status: string;
-  color: string;
-};
+import { ActivityIndicator, Alert, View } from 'react-native';
 
 const FilterSheet = forwardRef<BottomSheetModal, {}>((props, ref) => {
   const snapPoints = useMemo(() => ['33%'], []);
@@ -93,7 +87,7 @@ const FilterSheet = forwardRef<BottomSheetModal, {}>((props, ref) => {
       backdropComponent={renderBackdrop}
     >
       <BottomSheetView>
-        <View className="flex-row items-center justify-between gap-3">
+        <View className="flex-row items-center justify-between">
           <Button variant="link" onPress={handleFilterClose}>
             <Text className="text-base font-medium">Cancel</Text>
           </Button>
@@ -109,7 +103,9 @@ const FilterSheet = forwardRef<BottomSheetModal, {}>((props, ref) => {
           </Text>
           <View className="mt-4 flex-row flex-wrap gap-4">
             {loading ? (
-              <Loader2 />
+              <View className="flex-1 p-8">
+                <ActivityIndicator color="#2F50C1" />
+              </View>
             ) : (
               filterOptions?.map((item) => (
                 <Button

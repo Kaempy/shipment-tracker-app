@@ -33,8 +33,8 @@ The **Shipment Tracker App** is an Expo project developed using **React Native**
 
 ## 📱 Screenshots
 
-![Screenshot 1](./assets/previews/Screenshot%202024-09-20%20at%2011.42.00 PM.png)
-![Screenshot 2](./assets/previews/Screenshot%202024-09-21%20at%2012.26.19 AM.png)
+<img src="./assets/previews/Screenshot 2024-09-20 at 11.42.00 PM.png" alt="Screenshot 1" height="300" />
+<img src="./assets//previews//Screenshot 2024-09-21 at 12.26.19 AM.png" alt="Screenshot 2" height="300" />
 
 ## 🚀 Getting Started
 

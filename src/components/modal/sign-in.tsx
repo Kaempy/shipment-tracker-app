@@ -96,7 +96,7 @@ const SigninModal = ({ visible, setVisible }: Props) => {
               to register
             </Text>
           </View>
-          <View className="mt-8 justify-between gap-8">
+          <View className="mt-8 justify-between">
             <View className="gap-8">
               <View>
                 <Text className="mb-1 ml-1 font-500 text-sm text-[#333]">
@@ -119,7 +119,7 @@ const SigninModal = ({ visible, setVisible }: Props) => {
                 <Text className="mb-1 ml-1 font-500 text-sm text-[#333]">
                   Password
                 </Text>
-                <View className="relative h-12 w-full flex-row items-center justify-between gap-2 rounded-lg bg-[#F4F2F880] px-3">
+                <View className="relative h-12 w-full flex-row items-center justify-between rounded-lg bg-[#F4F2F880] px-3">
                   <TextInput
                     {...register('password')}
                     onChangeText={(text) => setValue('password', text)}

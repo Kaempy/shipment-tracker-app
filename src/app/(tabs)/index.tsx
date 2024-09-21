@@ -40,6 +40,7 @@ const HomeScreen = () => {
 
   // Fetch Awb shipments
   const fetchAwbShipments = useCallback(async () => {
+    if (!user) return;
     setLoading(true);
     try {
       const res = await fetch(
@@ -79,11 +80,11 @@ const HomeScreen = () => {
   }, [fetchAwbShipments]);
 
   if (loading) {
-    return <ActivityIndicator size="large" style={{ flex: 1 }} />;
+    return <ActivityIndicator color="#2F50C1" className="flex-1" />;
   }
 
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
+    <GestureHandlerRootView className="flex-1">
       <StatusBar style="dark" />
       <SafeAreaView
         style={[
@@ -94,24 +95,21 @@ const HomeScreen = () => {
         {visible ? (
           <SigninModal visible={visible} setVisible={setVisible} />
         ) : (
-          <View className="h-full flex-1 px-4">
+          <View className="px-4 py-8">
             <ListHeader showFilterModal={handleSnapPress} />
 
             {/* FlatList for displaying shipment items */}
             <FlatList
               data={data}
               keyExtractor={({ name }) => name}
-              renderItem={({ item }) => (
-                <View className="gap-3">
-                  <ShipmentItem item={item} />
-                </View>
-              )}
+              renderItem={({ item }) => <ShipmentItem item={item} />}
               ListEmptyComponent={
                 <Emptylist
                   title="No items found!"
-                  subTitle="No shipments item available."
+                  subTitle="No shipment item available."
                 />
               }
+              contentContainerStyle={{ marginBottom: 50 }}
               refreshing={refreshing}
               onRefresh={onRefresh}
             />

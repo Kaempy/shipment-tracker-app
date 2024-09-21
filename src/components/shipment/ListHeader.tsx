@@ -19,7 +19,7 @@ const ListHeader = ({ showFilterModal }: Props) => {
   return (
     <Fragment>
       <View className="mb-8 gap-4">
-        <View className="flex-row items-center justify-between gap-4">
+        <View className="flex-row items-center justify-between">
           <Image
             source={require('../../../assets/images/avatar.png')}
             resizeMode="contain"
@@ -55,7 +55,7 @@ const ListHeader = ({ showFilterModal }: Props) => {
           </Button>
         </View>
       </View>
-      <View className="mb-4 flex-row items-center justify-between gap-4">
+      <View className="mb-4 flex-row items-center justify-between">
         <Text className="text-2xl font-semibold">Shipments</Text>
         <View className="flex-row items-center justify-center gap-2">
           <Checkbox checked={checked} onCheckedChange={setChecked} />

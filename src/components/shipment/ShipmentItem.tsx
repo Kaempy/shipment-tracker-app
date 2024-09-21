@@ -26,30 +26,30 @@ const ShipmentItem = ({ item }: { item: ShipmentDetails }) => {
   const toggleExpand = () => setTouched((prev) => !prev);
 
   return (
-    <View className="mb-5 h-full flex-1">
+    <View className="mb-5">
       <View
         className={cn(
           'flex-row items-center justify-between gap-3 rounded-b-xl rounded-t-xl bg-[#F4F2F8] p-4',
           touched && 'rounded-b-none'
         )}
       >
-        <View className="flex-row items-center justify-between gap-5">
+        <View className="flex-row items-center justify-between gap-3">
           <Checkbox checked={checked} onCheckedChange={setChecked} />
           <Image
             source={require('../../../assets/images/box.png')}
             resizeMode="contain"
             alt="Shipment box"
-            className="h-14 w-14"
+            className="h-11 w-11"
           />
           <View>
             <Text className="text-[#3F395C]">AWB</Text>
-            <Text className="text-lg font-semibold">{name}</Text>
-            <View className="flex-row items-center justify-center gap-1">
-              <Text className="text-[13px] capitalize text-[#757281]">
+            <Text className="text-base font-semibold">{name}</Text>
+            <View className="flex-row items-center gap-1">
+              <Text className="text-xs capitalize text-[#757281]">
                 {origin_city}
               </Text>
               <ArrowRight />
-              <Text className="text-[13px] capitalize text-[#757281]">
+              <Text className="text-xs capitalize text-[#757281]">
                 {destination_city}
               </Text>
             </View>
@@ -79,7 +79,7 @@ const ShipmentItem = ({ item }: { item: ShipmentDetails }) => {
         <Fragment>
           <View className="border-t border-dashed" />
           <View className="rounded-b-xl rounded-t-none bg-[#F4F2F880] p-3">
-            <View className="flex-row items-center justify-between gap-4">
+            <View className="flex-row items-center justify-between">
               <View className="gap-0.5">
                 <Text className="text-[11px] capitalize text-primary">
                   Origin
@@ -97,7 +97,7 @@ const ShipmentItem = ({ item }: { item: ShipmentDetails }) => {
                   Destination
                 </Text>
                 <Text className="text-base capitalize text-black">
-                  Alexandria
+                  {destination_city}
                 </Text>
                 <Text className="text-[13px] font-light capitalize text-[#757281]">
                   {destination_address_line_1 ?? 'N/A'}

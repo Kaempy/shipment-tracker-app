@@ -1,4 +1,4 @@
-interface ShipmentDetails {
+type ShipmentDetails = {
   name: string;
   creation: string;
   modified: string;
@@ -71,5 +71,10 @@ interface ShipmentDetails {
   type: string | null;
   service_type: string | null;
   adjusted_cod: number;
-}
-export { ShipmentDetails };
+};
+type Message = {
+  name: string;
+  status: string;
+  color: string;
+};
+export { Message, ShipmentDetails };

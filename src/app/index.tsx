@@ -9,7 +9,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 const HomeScreen = () => {
   const { user } = useAuth();
   useEffect(() => {
-    if (user) router.replace('/(tabs)');
+    if (user) router.replace('/(tabs)/');
   }, [user]);
 
   return (
@@ -26,7 +26,7 @@ const HomeScreen = () => {
         />
         <Button
           className="w-full bg-white"
-          onPress={() => router.push('/(tabs)')}
+          onPress={() => router.push('/(tabs)/')}
         >
           <Text className="w-full text-center text-primary">Login</Text>
         </Button>
