@@ -25,7 +25,6 @@ const HomeScreen = () => {
   const { user } = useAuth();
   const [visible, setVisible] = useState(true);
   const sheetRef = useRef<BottomSheetModal>(null);
-  const isMounted = useRef(!visible);
   const [refreshing, setRefreshing] = useState(false);
   const [data, setData] = useState<ShipmentDetails[]>([]);
   const [loading, setLoading] = useState(false);
@@ -69,14 +68,7 @@ const HomeScreen = () => {
   }, [user]);
 
   useEffect(() => {
-    if (isMounted.current) {
-      if (user) {
-        fetchAwbShipments();
-      } else {
-        // Set isMounted to true after the first render
-        isMounted.current = true;
-      }
-    }
+    fetchAwbShipments();
   }, [fetchAwbShipments]);
 
   const onRefresh = useCallback(async () => {
