@@ -30,7 +30,7 @@ const Profile = () => {
   return (
     <SafeAreaView>
       <ScrollView>
-        <View className="px-4">
+        <View className="px-4 py-8">
           <View className="flex-row items-center justify-between">
             <Image
               source={require('../../../assets/images/avatar.png')}

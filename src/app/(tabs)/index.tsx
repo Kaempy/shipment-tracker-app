@@ -31,6 +31,16 @@ const HomeScreen = () => {
   const [allChecked, setAllChecked] = useState(false);
   const [checkedState, setCheckedState] = useState<boolean[]>([]);
   const [data, setData] = useState<ShipmentDetails[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [statusLoading, setStatusLoading] = useState(false);
+  const [filterOptions, setFilterOptions] = useState<Message[]>([]);
+  const [status, setStatus] = useState<string | null>(null);
+  const [search, setSearch] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (user) setVisible(false);
+    else setVisible(true);
+  }, [user]);
 
   // Initialize the checked state array based on data length
   useEffect(() => {
@@ -59,16 +69,6 @@ const HomeScreen = () => {
   const handleSnapPress = useCallback(() => {
     sheetRef.current?.present();
   }, []);
-
-  useEffect(() => {
-    if (user) setVisible(false);
-    else setVisible(true);
-  }, [user]);
-  const [loading, setLoading] = useState(false);
-  const [statusLoading, setStatusLoading] = useState(false);
-  const [filterOptions, setFilterOptions] = useState<Message[]>([]);
-  const [status, setStatus] = useState<string | null>(null);
-  const [search, setSearch] = useState<string | null>(null);
 
   // Fetch Awb shipments
   const fetchAwbShipments = useCallback(
@@ -111,6 +111,7 @@ const HomeScreen = () => {
 
   useEffect(() => {
     const fetchAwbStatus = async (): Promise<void> => {
+      if (!user) return;
       const formData = new FormData();
       formData.append('doctype', 'AWB Status');
       formData.append('fields', JSON.stringify(['name', 'status', 'color']));
@@ -135,7 +136,7 @@ const HomeScreen = () => {
       }
     };
     fetchAwbStatus();
-  }, []);
+  }, [user]);
 
   const onRefresh = useCallback(async () => {
     setRefreshing(true);
@@ -146,7 +147,6 @@ const HomeScreen = () => {
   if (loading) {
     return <ActivityIndicator color="#2F50C1" className="flex-1" />;
   }
-
   return (
     <GestureHandlerRootView className="flex-1">
       <StatusBar style="dark" />

@@ -85,7 +85,7 @@ const ShipmentItem = ({ item, data, checked, onCheckedChange }: Props) => {
             <Image
               source={require('../../../assets/images/expanded.png')}
               alt="Expanded icon"
-              className="h-7 w-7"
+              className="h-6 w-6"
               resizeMode="contain"
             />
           ) : (
