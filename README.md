@@ -15,6 +15,8 @@ The **Shipment Tracker App** is an Expo project developed using **React Native**
   - Utilizes **FlatList** to render the shipment items, and includes pull-to-refresh for better usability.
   - Search shipment by AWB name
   - Filter shipment list by status
+- **Logout Functionality**
+  - Implemented a logut functionality on the profile screen.
 
 ## 🧰 **Tech Stack I Used**
 
@@ -38,9 +40,9 @@ The **Shipment Tracker App** is an Expo project developed using **React Native**
 
 <img src="./assets/previews/Screenshot 2024-09-20 at 11.42.00 PM.png" alt="Screenshot 1" height="300" />
 <img src="./assets/previews/Screenshot 2024-09-21 at 4.47.29 PM.png" alt="Screenshot 2" height="300" />
-<img src="./assets/previews/Screenshot 2024-09-21 at 4.48.15 PM.png" alt="Screenshot 2" height="300" />
-<img src="./assets/previews/Screenshot 2024-09-21 at 4.58.38 PM.png" alt="Screenshot 2" height="300" />
-<img src="./assets/previews/Screenshot 2024-09-21 at 5.26.57 PM.png" alt="Screenshot 2" height="300" />
+<img src="./assets/previews/Screenshot 2024-09-21 at 4.48.15 PM.png" alt="Screenshot 3" height="300" />
+<img src="./assets/previews/Screenshot 2024-09-21 at 4.58.38 PM.png" alt="Screenshot 4" height="300" />
+<img src="./assets/previews/Screenshot 2024-09-21 at 5.26.57 PM.png" alt="Screenshot 5" height="300" />
 
 ## 🚀 Getting Started
 
@@ -117,7 +119,7 @@ To build the APK, run:
 │   ├── lib/        # Helper libraries
 │   ├── types/      # TypeScript types
 │   ├── validation/ # Form validation rules
-├── utils/          # Utility functions and helpers
+├── public/         # Public assets like favicon, manifest.json, etc.
 ├── README.md       # App documentation
 └── package.json    # Dependencies and project metadata
 ```
