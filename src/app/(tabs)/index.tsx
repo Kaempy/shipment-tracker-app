@@ -25,7 +25,7 @@ const HomeScreen = () => {
   const { user } = useAuth();
   const [visible, setVisible] = useState(true);
   const sheetRef = useRef<BottomSheetModal>(null);
-
+  const isMounted = useRef(!visible);
   const [refreshing, setRefreshing] = useState(false);
   const [data, setData] = useState<ShipmentDetails[]>([]);
   const [loading, setLoading] = useState(false);
@@ -57,7 +57,6 @@ const HomeScreen = () => {
           }),
         }
       );
-      if (!res.ok) throw new Error('Failed to fetch');
       const result = await res.json();
       setData(result.message);
     } catch (error) {
@@ -70,7 +69,14 @@ const HomeScreen = () => {
   }, [user]);
 
   useEffect(() => {
-    fetchAwbShipments();
+    if (isMounted.current) {
+      if (user) {
+        fetchAwbShipments();
+      } else {
+        // Set isMounted to true after the first render
+        isMounted.current = true;
+      }
+    }
   }, [fetchAwbShipments]);
 
   const onRefresh = useCallback(async () => {

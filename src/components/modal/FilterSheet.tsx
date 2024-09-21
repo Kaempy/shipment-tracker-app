@@ -41,7 +41,6 @@ const FilterSheet = forwardRef<BottomSheetModal, {}>((props, ref) => {
             }),
           }
         );
-        if (!res.ok) throw new Error('Failed to fetch');
         const result = await res.json();
         setFilterOptions(result.message);
       } catch (error) {
