@@ -53,7 +53,7 @@ const FilterSheet = forwardRef<BottomSheetModal, Props>(
     const onFilter = useCallback(() => {
       addFilter(selectedFilter);
       handleFilterClose();
-    }, [addFilter, handleFilterClose, selectedFilter]);
+    }, [addFilter, selectedFilter]);
 
     return (
       <BottomSheetModal
