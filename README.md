@@ -53,7 +53,7 @@ Make sure you have the following tools installed on your machine:
 - [Node.js](https://nodejs.org/en/) (v18 or higher)
 - [React Native CLI](https://reactnative.dev/docs/environment-setup) or [Expo CLI](https://expo.dev/)
 - [Android Studio](https://developer.android.com/studio) (for Android Emulator) or Xcode (for iOS Emulator)
-- [Yarn](https://yarnpkg.com/) (Optional, but recommended)
+- [NPM](https://www.npmjs.com/)
 
 ### 🛠 Installation
 
@@ -69,25 +69,33 @@ Make sure you have the following tools installed on your machine:
    cd shipment-tracker-app
    ```
 
-3. **Install dependencies:**:
+3. **Install dependencies**:
 
    ```bash
    npm install
    ```
 
-4. **Start the development server**:
+4. **Set environment variables**:
+
+- Create a .env file in the root directory and add your API URL:
+
+  ```bash
+  EXPO_PUBLIC_API_URL=https://your-api-url.com
+  ```
+
+5. **Start the development server**:
 
    ```bash
    expo start
    ```
 
-5. **To run the app on your device, scan the QR code using the Expo Go app, or select an emulator from the menu.**
+6. **To run the app on your device, scan the QR code using the Expo Go app, or select an emulator from the menu.**
 
 ## **How to Run the App**
 
 To build the APK, run:
 
-1. **Run the following command:**:
+1. **Run the following command**:
 
    ```bash
    expo build
