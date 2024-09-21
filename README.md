@@ -119,7 +119,6 @@ To build the APK, run:
 │   ├── lib/        # Helper libraries
 │   ├── types/      # TypeScript types
 │   ├── validation/ # Form validation rules
-├── public/         # Public assets like favicon, manifest.json, etc.
 ├── README.md       # App documentation
 └── package.json    # Dependencies and project metadata
 ```
