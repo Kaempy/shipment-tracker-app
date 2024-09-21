@@ -67,7 +67,7 @@ const HomeScreen = () => {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [user]);
 
   useEffect(() => {
     fetchAwbShipments();
