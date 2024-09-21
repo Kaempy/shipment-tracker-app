@@ -79,12 +79,12 @@ Make sure you have the following tools installed on your machine:
 
 ## **How to Run the App**
 
-To build the APK for Android:
+To build the APK, run:
 
 1. **Run the following command:**:
 
    ```bash
-   expo build:android
+   expo build
    ```
 
 2. **Follow the Expo instructions to generate the APK file, which you can then download.**
