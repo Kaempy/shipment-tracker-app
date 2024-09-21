@@ -18,15 +18,16 @@ import React, {
   useMemo,
   useState,
 } from 'react';
-import { View } from 'react-native';
+import { ActivityIndicator, View } from 'react-native';
 
 type Props = {
   data: Message[];
   addFilter: Dispatch<SetStateAction<string | null>>;
+  loading: boolean;
 };
 
 const FilterSheet = forwardRef<BottomSheetModal, Props>(
-  ({ data, addFilter }, ref) => {
+  ({ data, addFilter, loading }, ref) => {
     const snapPoints = useMemo(() => ['33%'], []);
 
     const renderBackdrop = useCallback(
@@ -76,26 +77,32 @@ const FilterSheet = forwardRef<BottomSheetModal, Props>(
             <Text className="text-sm font-medium uppercase text-[#58536E]">
               Shipment Status
             </Text>
-            <View className="mt-4 flex-row flex-wrap gap-4">
-              {data?.map((item) => (
-                <Button
-                  variant="secondary"
-                  key={item.name}
-                  className={`border-[1.5px] ${
-                    getSelectedFilter(item.name)
-                      ? 'border-[#6E91EC]'
-                      : 'border-transparent'
-                  } bg-[#F4F2F8]`}
-                  onPress={() => setSelectedFilter(item.name)}
-                >
-                  <Text
-                    className={`text-[#58536E] ${getSelectedFilter(item.name) ? 'text-[#2F50C1]' : ''}`}
+            {loading ? (
+              <View className="flex-1 py-4">
+                <ActivityIndicator color="#2F50C1" />
+              </View>
+            ) : (
+              <View className="mt-4 flex-row flex-wrap gap-4">
+                {data?.map((item) => (
+                  <Button
+                    variant="secondary"
+                    key={item.name}
+                    className={`border-[1.5px] ${
+                      getSelectedFilter(item.name)
+                        ? 'border-[#6E91EC]'
+                        : 'border-transparent'
+                    } bg-[#F4F2F8]`}
+                    onPress={() => setSelectedFilter(item.name)}
                   >
-                    {item.status}
-                  </Text>
-                </Button>
-              ))}
-            </View>
+                    <Text
+                      className={`text-[#58536E] ${getSelectedFilter(item.name) ? 'text-[#2F50C1]' : ''}`}
+                    >
+                      {item.status}
+                    </Text>
+                  </Button>
+                ))}
+              </View>
+            )}
           </View>
         </BottomSheetView>
       </BottomSheetModal>

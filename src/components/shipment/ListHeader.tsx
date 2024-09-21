@@ -2,13 +2,7 @@ import { Checkbox } from '@components/ui/checkbox';
 import { useAuth } from '@context/AuthContext';
 import Bell from '@svgs/bell';
 import { ListFilter, ScanLine } from 'lucide-react-native';
-import React, {
-  Dispatch,
-  Fragment,
-  memo,
-  SetStateAction,
-  useState,
-} from 'react';
+import React, { Dispatch, Fragment, memo, SetStateAction } from 'react';
 import { Image, View } from 'react-native';
 import { Button } from '../ui/button';
 import { Text } from '../ui/text';
@@ -17,11 +11,17 @@ import SearchInput from './SearchInput';
 type Props = {
   showFilterModal: () => void;
   addSearch: Dispatch<SetStateAction<string | null>>;
+  selectAllChecked: (checked: boolean) => void;
+  allChecked: boolean;
 };
 
-const ListHeader = ({ showFilterModal, addSearch }: Props) => {
+const ListHeader = ({
+  showFilterModal,
+  addSearch,
+  selectAllChecked,
+  allChecked,
+}: Props) => {
   const { user } = useAuth();
-  const [checked, setChecked] = useState(false);
 
   return (
     <Fragment>
@@ -65,7 +65,7 @@ const ListHeader = ({ showFilterModal, addSearch }: Props) => {
       <View className="mb-4 flex-row items-center justify-between">
         <Text className="text-2xl font-semibold">Shipments</Text>
         <View className="flex-row items-center justify-center gap-2">
-          <Checkbox checked={checked} onCheckedChange={setChecked} />
+          <Checkbox checked={allChecked} onCheckedChange={selectAllChecked} />
           <Text className="text-lg text-primary">Mark All</Text>
         </View>
       </View>

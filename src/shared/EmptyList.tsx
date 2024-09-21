@@ -16,8 +16,8 @@ const Emptylist = ({
         resizeMode="contain"
         className="h-[215px] w-[270px]"
       />
-      <Text className="font-psemibold text-2xl text-white">{title}</Text>
-      <Text className="font-pmedium mt-2 text-sm text-gray-100">
+      <Text className="font-psemibold text-2xl text-black">{title}</Text>
+      <Text className="font-pmedium mt-2 text-sm text-gray-700">
         {subTitle}
       </Text>
     </View>

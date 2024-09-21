@@ -3,9 +3,7 @@ import { Input } from '@components/ui/input';
 import { Text } from '@components/ui/text';
 import { useAuth } from '@context/AuthContext';
 import { zodResolver } from '@hookform/resolvers/zod';
-import useFetch from '@hooks/useFetch';
 import { Loader2 } from '@lib/icons/Loader2';
-import { User } from '@src/types/base';
 import { loginSchema, loginType } from '@src/validation/login';
 import { router } from 'expo-router';
 import { ChevronLeft, Eye, EyeOff } from 'lucide-react-native';
@@ -37,28 +35,42 @@ const SigninModal = ({ visible, setVisible }: Props) => {
 
   const { login } = useAuth();
 
-  const { loading, fetchData } = useFetch();
+  const [loading, setLoading] = useState(false);
   const onSubmit = async ({ email, password }: loginType) => {
     const formData = new FormData();
     formData.append('usr', email);
     formData.append('pwd', password);
-    const response = await fetchData<User>(
-      `${process.env.EXPO_PUBLIC_API_URL}/login`,
-      {
+    setLoading(true);
+    try {
+      const res = await fetch(`${process.env.EXPO_PUBLIC_API_URL}/login`, {
         method: 'POST',
         body: formData,
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      const response = await res.json();
+      if (response) {
+        login(response);
+        setVisible(false);
+        Alert.alert(
+          'Success',
+          `${response.message || 'Logged in'} successfully!`
+        );
+      } else {
+        throw new Error('Failed to log in. No response data.');
       }
-    );
-
-    response && login(response);
-    Alert.alert('Success', `${response?.message} successfully!`);
-    setVisible(false);
+    } catch (error) {
+      if (error instanceof Error) Alert.alert('Error', error.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const [showPassword, setShowPassword] = useState(false);
 
   const onClose = () => {
-    router.back();
+    if (router.canGoBack()) router.back();
   };
 
   return (

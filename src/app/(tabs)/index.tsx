@@ -9,17 +9,17 @@ import {
   BottomSheetModal,
   BottomSheetModalProvider,
 } from '@gorhom/bottom-sheet';
-import useFetch from '@hooks/useFetch';
 import Emptylist from '@src/shared/EmptyList';
-import {
-  Message,
-  MessageRes,
-  ShipmentDetails,
-  ShipmentRes,
-} from '@src/types/base';
+import { Message, ShipmentDetails } from '@src/types/base';
 import { StatusBar } from 'expo-status-bar';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { ActivityIndicator, FlatList, StyleSheet, View } from 'react-native';
+import {
+  ActivityIndicator,
+  Alert,
+  FlatList,
+  StyleSheet,
+  View,
+} from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -28,7 +28,33 @@ const HomeScreen = () => {
   const [visible, setVisible] = useState(true);
   const sheetRef = useRef<BottomSheetModal>(null);
   const [refreshing, setRefreshing] = useState(false);
+  const [allChecked, setAllChecked] = useState(false);
+  const [checkedState, setCheckedState] = useState<boolean[]>([]);
   const [data, setData] = useState<ShipmentDetails[]>([]);
+
+  // Initialize the checked state array based on data length
+  useEffect(() => {
+    setCheckedState(new Array(data.length).fill(false));
+  }, [data]);
+
+  // Logic to handle "Mark All" checkbox state
+  const handleSelectAll = (isChecked: boolean) => {
+    setAllChecked(isChecked);
+    setCheckedState(new Array(data.length).fill(isChecked));
+  };
+
+  // Logic to handle individual checkboxes and reflect changes in "Mark All" checkbox
+  const handleCheckboxChange = (index: number, isChecked: boolean) => {
+    const updatedCheckedState = checkedState.map((item, i) =>
+      i === index ? isChecked : item
+    );
+    setCheckedState(updatedCheckedState);
+
+    const allSelected = updatedCheckedState.every(Boolean);
+    const someSelected = updatedCheckedState.some(Boolean);
+
+    setAllChecked(allSelected || someSelected);
+  };
 
   const handleSnapPress = useCallback(() => {
     sheetRef.current?.present();
@@ -36,27 +62,41 @@ const HomeScreen = () => {
 
   useEffect(() => {
     if (user) setVisible(false);
+    else setVisible(true);
   }, [user]);
-  const { loading, fetchData } = useFetch();
+  const [loading, setLoading] = useState(false);
+  const [statusLoading, setStatusLoading] = useState(false);
   const [filterOptions, setFilterOptions] = useState<Message[]>([]);
   const [status, setStatus] = useState<string | null>(null);
   const [search, setSearch] = useState<string | null>(null);
+
   // Fetch Awb shipments
   const fetchAwbShipments = useCallback(
     async (option = {}) => {
       if (!user) return;
-      const res = await fetchData<ShipmentRes>(
-        `${process.env.EXPO_PUBLIC_API_URL}/frappe.client.get_list`,
-        {
-          method: 'POST',
-          body: JSON.stringify({
-            doctype: 'AWB',
-            fields: ['*'],
-            filters: option,
-          }),
-        }
-      );
-      res ? setData(res.message) : setData([]);
+      setLoading(true);
+      try {
+        const res = await fetch(
+          `${process.env.EXPO_PUBLIC_API_URL}/frappe.client.get_list`,
+          {
+            method: 'POST',
+            body: JSON.stringify({
+              doctype: 'AWB',
+              fields: ['*'],
+              filters: option,
+            }),
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          }
+        );
+        const result = await res.json();
+        result ? setData(result.message) : setData([]);
+      } catch (error) {
+        if (error instanceof Error) Alert.alert('Error', error.message);
+      } finally {
+        setLoading(false);
+      }
     },
     [user]
   );
@@ -68,22 +108,33 @@ const HomeScreen = () => {
     if (status) fetchAwbShipments({ status: ['like', status] });
     if (search) fetchAwbShipments({ name: ['like', search] });
   }, [fetchAwbShipments, status, search]);
+
   useEffect(() => {
-    let isMounted = true;
     const fetchAwbStatus = async (): Promise<void> => {
       const formData = new FormData();
       formData.append('doctype', 'AWB Status');
       formData.append('fields', JSON.stringify(['name', 'status', 'color']));
-      const res = await fetchData<MessageRes>(
-        `${process.env.EXPO_PUBLIC_API_URL}/frappe.client.get_list`,
-        { method: 'POST', body: formData }
-      );
-      res ? setFilterOptions(res.message) : setFilterOptions([]);
+      setStatusLoading(true);
+      try {
+        const res = await fetch(
+          `${process.env.EXPO_PUBLIC_API_URL}/frappe.client.get_list`,
+          {
+            method: 'POST',
+            body: formData,
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          }
+        );
+        const result = await res.json();
+        result ? setFilterOptions(result.message) : setFilterOptions([]);
+      } catch (error) {
+        if (error instanceof Error) Alert.alert('Error', error.message);
+      } finally {
+        setStatusLoading(false);
+      }
     };
     fetchAwbStatus();
-    return () => {
-      isMounted = false;
-    };
   }, []);
 
   const onRefresh = useCallback(async () => {
@@ -112,14 +163,23 @@ const HomeScreen = () => {
             <ListHeader
               showFilterModal={handleSnapPress}
               addSearch={setSearch}
+              selectAllChecked={handleSelectAll}
+              allChecked={allChecked}
             />
 
             {/* FlatList for displaying shipment items */}
             <FlatList
               data={data}
               keyExtractor={({ name }) => name}
-              renderItem={({ item }) => (
-                <ShipmentItem item={item} data={filterOptions} />
+              renderItem={({ item, index }) => (
+                <ShipmentItem
+                  item={item}
+                  data={filterOptions}
+                  checked={checkedState[index]}
+                  onCheckedChange={(isChecked: boolean) =>
+                    handleCheckboxChange(index, isChecked)
+                  }
+                />
               )}
               ListEmptyComponent={
                 <Emptylist
@@ -139,6 +199,7 @@ const HomeScreen = () => {
           ref={sheetRef}
           data={filterOptions}
           addFilter={setStatus}
+          loading={statusLoading}
         />
       </BottomSheetModalProvider>
     </GestureHandlerRootView>

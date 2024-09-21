@@ -15,10 +15,11 @@ import Animated, { FadeInUp } from 'react-native-reanimated';
 type Props = {
   item: ShipmentDetails;
   data: Message[];
+  checked: boolean;
+  onCheckedChange: (checked: boolean) => void;
 };
 
-const ShipmentItem = ({ item, data }: Props) => {
-  const [checked, setChecked] = useState(false);
+const ShipmentItem = ({ item, data, checked, onCheckedChange }: Props) => {
   const [touched, setTouched] = useState(false);
 
   const {
@@ -32,7 +33,8 @@ const ShipmentItem = ({ item, data }: Props) => {
 
   const toggleExpand = () => setTouched(!touched);
 
-  const statusColor = data.find((item) => item.status === status)?.color;
+  const statusColor =
+    data?.find((item) => item.status === status)?.color ?? '#3F395C';
 
   return (
     <View className="mb-4">
@@ -45,7 +47,7 @@ const ShipmentItem = ({ item, data }: Props) => {
         )}
       >
         <View className="flex-row items-center justify-between gap-3">
-          <Checkbox checked={checked} onCheckedChange={setChecked} />
+          <Checkbox checked={checked} onCheckedChange={onCheckedChange} />
           <Image
             source={require('../../../assets/images/box.png')}
             resizeMode="contain"
