@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { User } from '@src/types/base';
 import React, {
   createContext,
   ReactNode,
@@ -8,12 +9,6 @@ import React, {
   useMemo,
   useState,
 } from 'react';
-
-type User = {
-  full_name: string;
-  home_page: string;
-  message: string;
-};
 
 type AuthContextType = {
   user: User | null;

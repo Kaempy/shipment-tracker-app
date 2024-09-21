@@ -3,7 +3,9 @@ import { Input } from '@components/ui/input';
 import { Text } from '@components/ui/text';
 import { useAuth } from '@context/AuthContext';
 import { zodResolver } from '@hookform/resolvers/zod';
+import useFetch from '@hooks/useFetch';
 import { Loader2 } from '@lib/icons/Loader2';
+import { User } from '@src/types/base';
 import { loginSchema, loginType } from '@src/validation/login';
 import { router } from 'expo-router';
 import { ChevronLeft, Eye, EyeOff } from 'lucide-react-native';
@@ -35,36 +37,22 @@ const SigninModal = ({ visible, setVisible }: Props) => {
 
   const { login } = useAuth();
 
-  const [loading, setLoading] = useState(false);
-
+  const { loading, fetchData } = useFetch();
   const onSubmit = async ({ email, password }: loginType) => {
-    setLoading(true);
     const formData = new FormData();
     formData.append('usr', email);
     formData.append('pwd', password);
-    try {
-      const response = await fetch(
-        'https://shippex-demo.bc.brandimic.com/api/method/login',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: formData,
-        }
-      );
-      if (!response.ok) {
-        throw new Error('Failed to submit form');
+    const response = await fetchData<User>(
+      `${process.env.EXPO_PUBLIC_API_URL}/login`,
+      {
+        method: 'POST',
+        body: formData,
       }
-      const result = await response.json();
-      login(result);
-      Alert.alert('Success', `${result.message} successfully!`);
-      setVisible(false);
-    } catch (error) {
-      if (error instanceof Error) Alert.alert('Error', error.message);
-    } finally {
-      setLoading(false);
-    }
+    );
+
+    response && login(response);
+    Alert.alert('Success', `${response?.message} successfully!`);
+    setVisible(false);
   };
 
   const [showPassword, setShowPassword] = useState(false);
@@ -147,7 +135,7 @@ const SigninModal = ({ visible, setVisible }: Props) => {
                 )}
               </View>
             </View>
-            <Button onPress={handleSubmit(onSubmit)}>
+            <Button onPress={handleSubmit(onSubmit)} disabled={loading}>
               {loading ? (
                 <Loader2 className="animate-spin" color="white" />
               ) : (

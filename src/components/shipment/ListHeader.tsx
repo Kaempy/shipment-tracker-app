@@ -2,7 +2,13 @@ import { Checkbox } from '@components/ui/checkbox';
 import { useAuth } from '@context/AuthContext';
 import Bell from '@svgs/bell';
 import { ListFilter, ScanLine } from 'lucide-react-native';
-import React, { Fragment, memo, useState } from 'react';
+import React, {
+  Dispatch,
+  Fragment,
+  memo,
+  SetStateAction,
+  useState,
+} from 'react';
 import { Image, View } from 'react-native';
 import { Button } from '../ui/button';
 import { Text } from '../ui/text';
@@ -10,9 +16,10 @@ import SearchInput from './SearchInput';
 
 type Props = {
   showFilterModal: () => void;
+  addSearch: Dispatch<SetStateAction<string | null>>;
 };
 
-const ListHeader = ({ showFilterModal }: Props) => {
+const ListHeader = ({ showFilterModal, addSearch }: Props) => {
   const { user } = useAuth();
   const [checked, setChecked] = useState(false);
 
@@ -40,7 +47,7 @@ const ListHeader = ({ showFilterModal }: Props) => {
             {user?.full_name || 'N/A'}
           </Text>
         </View>
-        <SearchInput placeholder="Search" />
+        <SearchInput placeholder="Search" onSearch={addSearch} />
         <View className="flex-row items-center justify-center gap-4">
           <Button
             className="flex w-[48%] flex-row items-center justify-center gap-2 bg-[#F4F2F8]"

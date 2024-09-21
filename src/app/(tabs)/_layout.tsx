@@ -1,12 +1,12 @@
 import { Tabs } from 'expo-router';
 
-import { Colors } from '@constants/Colors';
-import { useColorScheme } from '@hooks/useColorScheme';
+import { NAV_THEME } from '@lib/constants';
+import { useColorScheme } from '@lib/useColorScheme';
 import { Containers, Scan, User, Wallet } from '@svgs/index';
 import { useId } from 'react';
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
+  const { colorScheme } = useColorScheme();
   const tabs = [
     { key: useId(), name: 'index', title: 'Shipments', icon: Containers },
     { key: useId(), name: 'scan', title: 'Scan', icon: Scan },
@@ -16,7 +16,7 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+        tabBarActiveTintColor: NAV_THEME[colorScheme].tint,
         headerShown: false,
       }}
     >
@@ -28,10 +28,9 @@ export default function TabLayout() {
             name={name}
             options={{
               title,
-              tabBarActiveTintColor: '#2F50C1',
-              tabBarInactiveTintColor: '#A7A3B3',
-              tabBarIcon: ({ focused }) =>
-                icon({ fill: focused ? '#2F50C1' : '#A7A3B3' }),
+              // tabBarActiveTintColor: '#2F50C1',
+              // tabBarInactiveTintColor: '#A7A3B3',
+              tabBarIcon: ({ color }) => icon({ fill: color }),
             }}
           />
         );

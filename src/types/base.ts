@@ -1,3 +1,9 @@
+type User = {
+  full_name: string;
+  home_page: string;
+  message: string;
+};
+
 type ShipmentDetails = {
   name: string;
   creation: string;
@@ -72,9 +78,15 @@ type ShipmentDetails = {
   service_type: string | null;
   adjusted_cod: number;
 };
+
 type Message = {
   name: string;
   status: string;
   color: string;
 };
-export { Message, ShipmentDetails };
+
+type ShipmentRes = { message: ShipmentDetails[] };
+
+type MessageRes = { message: Message[] };
+
+export { Message, MessageRes, ShipmentDetails, ShipmentRes, User };

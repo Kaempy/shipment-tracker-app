@@ -2,15 +2,22 @@ import { Badge } from '@components/ui/badge';
 import { Button } from '@components/ui/button';
 import { Checkbox } from '@components/ui/checkbox';
 import { cn } from '@lib/utils';
-import { ShipmentDetails } from '@src/types/base';
+import { Message, ShipmentDetails } from '@src/types/base';
 import ArrowRight from '@svgs/arrow-right';
 import Expand from '@svgs/expand';
 import Phone from '@svgs/phone';
 import Whatsapp from '@svgs/whatsapp';
-import React, { Fragment, memo, useState } from 'react';
+import { ArrowRight as Arrow } from 'lucide-react-native';
+import { memo, useState } from 'react';
 import { Image, Pressable, Text, View } from 'react-native';
+import Animated, { FadeInUp } from 'react-native-reanimated';
 
-const ShipmentItem = ({ item }: { item: ShipmentDetails }) => {
+type Props = {
+  item: ShipmentDetails;
+  data: Message[];
+};
+
+const ShipmentItem = ({ item, data }: Props) => {
   const [checked, setChecked] = useState(false);
   const [touched, setTouched] = useState(false);
 
@@ -23,14 +30,18 @@ const ShipmentItem = ({ item }: { item: ShipmentDetails }) => {
     status,
   } = item;
 
-  const toggleExpand = () => setTouched((prev) => !prev);
+  const toggleExpand = () => setTouched(!touched);
+
+  const statusColor = data.find((item) => item.status === status)?.color;
 
   return (
-    <View className="mb-5">
+    <View className="mb-4">
       <View
         className={cn(
           'flex-row items-center justify-between gap-3 rounded-b-xl rounded-t-xl bg-[#F4F2F8] p-4',
-          touched && 'rounded-b-none'
+          touched && 'rounded-b-none',
+          checked && touched && 'border border-b-0 border-primary',
+          checked && !touched && 'border border-primary'
         )}
       >
         <View className="flex-row items-center justify-between gap-3">
@@ -55,8 +66,13 @@ const ShipmentItem = ({ item }: { item: ShipmentDetails }) => {
             </View>
           </View>
         </View>
-        <Badge>
-          <Text className={cn('text-xs uppercase')}>{status}</Text>
+        <Badge style={{ backgroundColor: `${statusColor}10` }}>
+          <Text
+            className={cn('text-xs uppercase')}
+            style={{ color: statusColor }}
+          >
+            {status}
+          </Text>
         </Badge>
         <Pressable
           onPress={toggleExpand}
@@ -76,9 +92,14 @@ const ShipmentItem = ({ item }: { item: ShipmentDetails }) => {
         </Pressable>
       </View>
       {touched && (
-        <Fragment>
-          <View className="border-t border-dashed" />
-          <View className="rounded-b-xl rounded-t-none bg-[#F4F2F880] p-3">
+        <Animated.View entering={FadeInUp}>
+          <View className="border-[1px] border-t border-dashed border-primary/15" />
+          <View
+            className={cn(
+              'rounded-b-xl rounded-t-none bg-[#F4F2F880] p-3',
+              checked && 'border border-t-0 border-primary'
+            )}
+          >
             <View className="flex-row items-center justify-between">
               <View className="gap-0.5">
                 <Text className="text-[11px] capitalize text-primary">
@@ -91,7 +112,7 @@ const ShipmentItem = ({ item }: { item: ShipmentDetails }) => {
                   {sender_address ?? 'N/A'}
                 </Text>
               </View>
-              <ArrowRight />
+              <Arrow color="#2F50C1" />
               <View className="gap-0.5">
                 <Text className="text-[11px] capitalize text-primary">
                   Destination
@@ -119,7 +140,7 @@ const ShipmentItem = ({ item }: { item: ShipmentDetails }) => {
               </Button>
             </View>
           </View>
-        </Fragment>
+        </Animated.View>
       )}
     </View>
   );

@@ -11,102 +11,73 @@ import {
 } from '@gorhom/bottom-sheet';
 import { Message } from '@src/types/base';
 import React, {
+  Dispatch,
   forwardRef,
+  SetStateAction,
   useCallback,
-  useEffect,
   useMemo,
   useState,
 } from 'react';
-import { ActivityIndicator, Alert, View } from 'react-native';
+import { View } from 'react-native';
 
-const FilterSheet = forwardRef<BottomSheetModal, {}>((props, ref) => {
-  const snapPoints = useMemo(() => ['33%'], []);
-  const [loading, setLoading] = useState(false);
-  const [filterOptions, setFilterOptions] = useState<Message[]>([]);
-  useEffect(() => {
-    let isMounted = true;
-    const fetchAwbStatus = async (): Promise<void> => {
-      setLoading(true);
-      try {
-        const res = await fetch(
-          'https://shippex-demo.bc.brandimic.com/api/method/frappe.client.get_list',
-          {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              doctype: 'AWB Status',
-              fields: ['name', 'status', 'color'],
-            }),
-          }
-        );
-        const result = await res.json();
-        setFilterOptions(result.message);
-      } catch (error) {
-        if (error instanceof Error) Alert.alert('Error', error.message);
-      } finally {
-        setLoading(false);
-      }
+type Props = {
+  data: Message[];
+  addFilter: Dispatch<SetStateAction<string | null>>;
+};
+
+const FilterSheet = forwardRef<BottomSheetModal, Props>(
+  ({ data, addFilter }, ref) => {
+    const snapPoints = useMemo(() => ['33%'], []);
+
+    const renderBackdrop = useCallback(
+      (props: BottomSheetBackdropProps) => (
+        <BottomSheetBackdrop
+          {...props}
+          disappearsOnIndex={-1}
+          appearsOnIndex={0}
+        />
+      ),
+      []
+    );
+
+    const handleFilterClose = () => {
+      (ref as React.RefObject<BottomSheetModal>).current?.close();
     };
-    fetchAwbStatus();
-    return () => {
-      isMounted = false;
+
+    const [selectedFilter, setSelectedFilter] = useState<string | null>(null);
+
+    const getSelectedFilter = (key: string) => {
+      return selectedFilter === key;
     };
-  }, []);
+    const onFilter = useCallback(() => {
+      addFilter(selectedFilter);
+      handleFilterClose();
+    }, [selectedFilter]);
 
-  const renderBackdrop = useCallback(
-    (props: BottomSheetBackdropProps) => (
-      <BottomSheetBackdrop
-        {...props}
-        disappearsOnIndex={-1}
-        appearsOnIndex={0}
-      />
-    ),
-    []
-  );
-
-  const handleFilterClose = () => {
-    (ref as React.RefObject<BottomSheetModal>).current?.close();
-  };
-
-  const onFilter = () => {};
-
-  const [selectedFilter, setSelectedFilter] = useState<string | null>(null);
-
-  const getSelectedFilter = (key: string) => {
-    return selectedFilter === key;
-  };
-
-  return (
-    <BottomSheetModal
-      ref={ref}
-      snapPoints={snapPoints}
-      enablePanDownToClose
-      backdropComponent={renderBackdrop}
-    >
-      <BottomSheetView>
-        <View className="flex-row items-center justify-between">
-          <Button variant="link" onPress={handleFilterClose}>
-            <Text className="text-base font-medium">Cancel</Text>
-          </Button>
-          <Text className="text-lg font-semibold">Filters</Text>
-          <Button variant="link" onPress={onFilter}>
-            <Text className="text-base font-medium">Done</Text>
-          </Button>
-        </View>
-        <View className="h-1 border-b border-[#EAE7F2]" />
-        <View className="m-6">
-          <Text className="text-sm font-medium uppercase text-[#58536E]">
-            Shipment Status
-          </Text>
-          <View className="mt-4 flex-row flex-wrap gap-4">
-            {loading ? (
-              <View className="flex-1 p-8">
-                <ActivityIndicator color="#2F50C1" />
-              </View>
-            ) : (
-              filterOptions?.map((item) => (
+    return (
+      <BottomSheetModal
+        ref={ref}
+        snapPoints={snapPoints}
+        enablePanDownToClose
+        backdropComponent={renderBackdrop}
+      >
+        <BottomSheetView>
+          <View className="flex-row items-center justify-between">
+            <Button variant="link" onPress={handleFilterClose}>
+              <Text className="text-base font-medium">Cancel</Text>
+            </Button>
+            <Text className="text-lg font-semibold">Filters</Text>
+            <Button variant="link" onPress={onFilter}>
+              <Text className="text-base font-medium">Done</Text>
+            </Button>
+          </View>
+          <View className="h-1 border-b border-[#EAE7F2]" />
+          <View className="m-6">
+            <Text className="text-sm font-medium uppercase text-[#58536E]">
+              Shipment Status
+            </Text>
+            <View className="mt-4 flex-row flex-wrap gap-4">
+              {data?.map((item) => (
                 <Button
                   variant="secondary"
                   key={item.name}
@@ -123,13 +94,13 @@ const FilterSheet = forwardRef<BottomSheetModal, {}>((props, ref) => {
                     {item.status}
                   </Text>
                 </Button>
-              ))
-            )}
+              ))}
+            </View>
           </View>
-        </View>
-      </BottomSheetView>
-    </BottomSheetModal>
-  );
-});
+        </BottomSheetView>
+      </BottomSheetModal>
+    );
+  }
+);
 
 export default FilterSheet;

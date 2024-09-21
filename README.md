@@ -6,22 +6,25 @@ The **Shipment Tracker App** is an Expo project developed using **React Native**
 
 - **Splash Screen**
   - Implemented using Lottie animation, displaying an engaging animation as defined in the provided Figma file.
-  - **Login Screen**
+- **Login Screen**
   - A login screen with form validation using **React Hook Form**.
   - Fields for username/email and password.
   - Animation integrated to enhance the user experience as per the Figma design.
-  - **Shipment List Screen**
+- **Shipment List Screen**
   - Displays a list of shipments with statuses.
   - Utilizes **FlatList** to render the shipment items, and includes pull-to-refresh for better usability.
+  - Search shipment by AWB name
+  - Filter shipment list by status
 
 ## 🧰 **Tech Stack I Used**
 
 - **React Native** with **Expo** for a streamlined development process.
 - **TypeScript** for type safety and cleaner code.
-- **React Hook Form** for form validation on the login screen.
+- **NativeWind** for easy styling of components.
+- **React Hook Form** with **Zod** for form validation on the login screen.
 - **Async Storage** for storing login information persistently.
 - **Lottie** for smooth and eye-catching splash screen animations.
-- **API Integration** to fetch and display real-time shipment data from a server.
+- **API Integration** to fetch and display real-time shipment data from server.
 - **Husky** for enforcing consistent coding guidelines through Git hooks.
 
 ## **How to Run the App**
@@ -34,7 +37,10 @@ The **Shipment Tracker App** is an Expo project developed using **React Native**
 ## 📱 Screenshots
 
 <img src="./assets/previews/Screenshot 2024-09-20 at 11.42.00 PM.png" alt="Screenshot 1" height="300" />
-<img src="./assets//previews//Screenshot 2024-09-21 at 12.26.19 AM.png" alt="Screenshot 2" height="300" />
+<img src="./assets/previews/Screenshot 2024-09-21 at 4.47.29 PM.png" alt="Screenshot 2" height="300" />
+<img src="./assets/previews/Screenshot 2024-09-21 at 4.48.15 PM.png" alt="Screenshot 2" height="300" />
+<img src="./assets/previews/Screenshot 2024-09-21 at 4.58.38 PM.png" alt="Screenshot 2" height="300" />
+<img src="./assets/previews/Screenshot 2024-09-21 at 5.26.57 PM.png" alt="Screenshot 2" height="300" />
 
 ## 🚀 Getting Started
 

@@ -55,6 +55,9 @@ module.exports = {
     camelcase: 'off',
     'no-shadow': 'off',
     'react-native/sort-styles': 'off',
+    'consistent-return': 'off',
+    'no-unused-expressions': 'off',
+    'no-unused-vars': 'off',
   },
   settings: {
     'import/resolver': {

@@ -4,7 +4,6 @@ import AnimatedSplashScreen from '@components/AnimatedSplashScreen';
 import { AuthProvider } from '@context/AuthContext';
 import { NAV_THEME } from '@lib/constants';
 import { Theme, ThemeProvider } from '@react-navigation/native';
-import { PortalHost } from '@rn-primitives/portal';
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
@@ -58,7 +57,6 @@ export default function RootLayout() {
       <AuthProvider>
         <Stack screenOptions={{ headerShown: false }} />
       </AuthProvider>
-      <PortalHost />
     </ThemeProvider>
   );
 }
