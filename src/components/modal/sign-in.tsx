@@ -96,7 +96,7 @@ const SigninModal = ({ visible, setVisible }: Props) => {
               to register
             </Text>
           </View>
-          <View className="mt-8 justify-between">
+          <View className="mt-8 justify-between gap-12">
             <View className="gap-8">
               <View>
                 <Text className="mb-1 ml-1 font-500 text-sm text-[#333]">

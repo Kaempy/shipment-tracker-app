@@ -10,6 +10,7 @@ import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';
+import { Platform } from 'react-native';
 import 'react-native-reanimated';
 import '../global.css';
 
@@ -42,7 +43,7 @@ export default function RootLayout() {
     SplashScreen.hideAsync();
   }, [fontsLoaded, error]);
 
-  if (!appReady) {
+  if (Platform.OS === 'ios' && !appReady) {
     return (
       <AnimatedSplashScreen
         fontsLoaded={fontsLoaded}
