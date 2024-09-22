@@ -49,6 +49,12 @@ const SigninModal = ({ visible, setVisible }: Props) => {
           'Content-Type': 'multipart/form-data',
         },
       });
+      if (!res.ok) {
+        if (res.status === 401) {
+          throw Error('Invalid credentials');
+        }
+        throw Error(`Oppsss... an error occured. \nStatus code: ${res.status}`);
+      }
       const response = await res.json();
       if (response) {
         login(response);

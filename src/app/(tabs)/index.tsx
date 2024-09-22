@@ -36,9 +36,8 @@ const HomeScreen = () => {
   const [filterOptions, setFilterOptions] = useState<Message[]>([]);
   const [status, setStatus] = useState<string | null>(null);
   const [search, setSearch] = useState<string | null>(null);
-
   useEffect(() => {
-    if (user) setVisible(false);
+    if (user?.full_name) setVisible(false);
     else setVisible(true);
   }, [user]);
 
@@ -90,6 +89,14 @@ const HomeScreen = () => {
             },
           }
         );
+        if (!res.ok) {
+          if (res.status === 401) {
+            throw Error('Invalid credentials');
+          }
+          throw Error(
+            `Oppsss... an error occured. \nStatus code: ${res.status}`
+          );
+        }
         const result = await res.json();
         result ? setData(result.message) : setData([]);
       } catch (error) {
@@ -127,6 +134,14 @@ const HomeScreen = () => {
             },
           }
         );
+        if (!res.ok) {
+          if (res.status === 401) {
+            throw Error('Invalid credentials');
+          }
+          throw Error(
+            `Oppsss... an error occured. \nStatus code: ${res.status}`
+          );
+        }
         const result = await res.json();
         result ? setFilterOptions(result.message) : setFilterOptions([]);
       } catch (error) {
@@ -187,7 +202,7 @@ const HomeScreen = () => {
                   subTitle="No shipment item available."
                 />
               }
-              contentContainerStyle={{ marginBottom: 50 }}
+              contentContainerStyle={{ paddingBottom: 220 }}
               refreshing={refreshing}
               onRefresh={onRefresh}
             />
